@@ -1,0 +1,31 @@
+`timescale 1ns/1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Create Date: 05/13/2026 06:45:01 PM
+// Module Name: tb_mux_4x1
+//////////////////////////////////////////////////////////////////////////////////
+
+module tb_mux_4x1();
+    reg [3:0] I;
+    reg [1:0] S;
+    wire Y;
+    
+    // Instantiate DUT
+    Multiplexer_4x1 dut (.I(I), .S(S), .Y(Y));
+    
+    // Test stimulus
+    initial begin
+        $display("Time\tS1 S0\tI3 I2 I1 I0\tY");
+        $monitor("%0t\t%b %b\t%b %b %b %b\t%b", $time, S[1], S[0], I[3], I[2], I[1], I[0], Y);
+        
+        I = 4'b0000; S = 2'b00; #10;
+        I = 4'b0001; S = 2'b01; #10;
+        I = 4'b0010; S = 2'b10; #10;
+        I = 4'b1000; S = 2'b11; #10;
+        
+        I = 4'b1111; S = 2'b00; #10;
+        I = 4'b1010; S = 2'b01; #10;
+        I = 4'b0110; S = 2'b10; #10;
+        I = 4'b0011; S = 2'b11; #10;
+        $finish;
+    end
+endmodule
